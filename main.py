@@ -19,7 +19,10 @@ if not TOKEN:
 
 BOT_NAME = "MyCommunity"
 
-intents = discord.Intents.all()
+# Intents sem privilegiados por padrão para o bot subir mesmo sem configurar o portal.
+# Se você ativar Server Members + Message Content no portal, troque para Intents.all()
+intents = discord.Intents.default()
+intents.message_content = False
 
 bot = commands.Bot(command_prefix="/", intents=intents)
 
