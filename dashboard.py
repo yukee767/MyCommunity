@@ -7,7 +7,7 @@ from flask import Flask, render_template_string
 
 import db
 
-BOT = {"name": "aMyCommunity", "started_at": None}
+BOT = {"name": "MyCommunity", "started_at": None}
 
 app = Flask(__name__)
 
@@ -161,13 +161,21 @@ def _find_port(start=5000):
 
 def start(bot=None, open_browser=True):
     if bot is not None:
-        BOT["name"] = getattr(bot.user, "name", "aMyCommunity") or "aMyCommunity"
+        try:
+            BOT["name"] = getattr(bot.user, "name", None) or "MyCommunity"
+        except Exception:
+            BOT["name"] = "MyCommunity"
+        if BOT.get("started_at") is None:
+            BOT["started_at"] = datetime.now().isoformat()
 
     def run():
         port = _find_port()
         print(f"🖥️  Dashboard local: http://127.0.0.1:{port}")
         if open_browser:
-            webbrowser.open(f"http://127.0.0.1:{port}")
+            try:
+                webbrowser.open(f"http://127.0.0.1:{port}")
+            except Exception:
+                pass
         app.run(host="127.0.0.1", port=port, debug=False, use_reloader=False)
 
     t = threading.Thread(target=run, daemon=True)
@@ -177,4 +185,12 @@ def start(bot=None, open_browser=True):
 
 if __name__ == "__main__":
     db.init_db()
-    start()
+    if BOT.get("started_at") is None:
+        BOT["started_at"] = datetime.now().isoformat()
+    port = _find_port()
+    print(f"🖥️  Dashboard local (standalone): http://127.0.0.1:{port}")
+    try:
+        webbrowser.open(f"http://127.0.0.1:{port}")
+    except Exception:
+        pass
+    app.run(host="127.0.0.1", port=port, debug=False, use_reloader=False)

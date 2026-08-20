@@ -17,7 +17,7 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
     raise SystemExit("Token não encontrado. Crie o arquivo .env com DISCORD_TOKEN=seu_token")
 
-BOT_NAME = "aMyCommunity"
+BOT_NAME = "MyCommunity"
 
 intents = discord.Intents.all()
 

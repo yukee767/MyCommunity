@@ -1,11 +1,11 @@
-# 🤖 aMyCommunity — Bot Interativo para Comunidades
+# 🤖 MyCommunity — Bot Interativo para Comunidades
 
 Bot para Discord com **22 comandos** em slash, feito com **discord.py** + Python,
 banco de dados **SQLite** local e **dashboard web** rodando no seu PC.
 
 ## 🚀 Como rodar
 
-1. Crie o bot no [Discord Developer Portal](https://discord.com/developers/applications) com o nome **aMyCommunity** (veja o passo a passo abaixo).
+1. Crie o bot no [Discord Developer Portal](https://discord.com/developers/applications) com o nome **MyCommunity** (veja o passo a passo abaixo).
 2. Copie o token para um arquivo `.env` (use o `.env.example` como modelo).
 3. Instale as dependências:
    ```bash
