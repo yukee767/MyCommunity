@@ -36,12 +36,12 @@ async def on_ready():
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=BOT_NAME))
     except Exception:
         pass
-    print(f"✅ Bot {bot.user} online! ({len(bot.guilds)} servidores)")
+    print(f"[ONLINE] Bot {bot.user} online! ({len(bot.guilds)} servidores)", flush=True)
     try:
         synced = await bot.tree.sync()
-        print(f"✅ {len(synced)} comandos sincronizados.")
+        print(f"[SYNC] {len(synced)} comandos sincronizados.", flush=True)
     except Exception as e:
-        print(f"⚠️ Erro ao sincronizar comandos: {e}")
+        print(f"[WARN] Erro ao sincronizar comandos: {e}", flush=True)
 
 
 @bot.listen("on_app_command_completion")
@@ -56,7 +56,7 @@ async def load_cogs():
     for file in os.listdir("cogs"):
         if file.endswith(".py") and not file.startswith("__"):
             await bot.load_extension(f"cogs.{file[:-3]}")
-            print(f"✅ Cog carregado: {file}")
+            print(f"[COG] carregado: {file}", flush=True)
 
 
 @bot.tree.error
