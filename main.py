@@ -8,6 +8,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 import db
+import api
 import dashboard
 
 load_dotenv()
@@ -31,7 +32,10 @@ bot = commands.Bot(command_prefix="/", intents=intents)
 async def on_ready():
     db.set_meta("online", "1")
     db.set_meta("guilds", str(len(bot.guilds)))
-    dashboard.BOT["started_at"] = datetime.now(timezone.utc).isoformat()
+    iso = datetime.now(timezone.utc).isoformat()
+    dashboard.BOT["started_at"] = iso
+    api.set_started_now()
+    db.set_meta("started_at", iso)
     try:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=BOT_NAME))
     except Exception:
@@ -81,6 +85,9 @@ async def main():
     db.init_db()
     if os.getenv("NO_DASHBOARD") != "1":
         dashboard.start(bot)
+    # FastAPI (usado pelo Next.js)
+    if os.getenv("NO_API") != "1":
+        api.start(host="127.0.0.1", port=8000)
     async with bot:
         await load_cogs()
         await bot.start(TOKEN)

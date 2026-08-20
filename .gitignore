@@ -3,3 +3,8 @@ __pycache__/
 venv/
 .env
 data.db
+*.log
+web/node_modules/
+web/.next/
+web/out/
+.next/
