@@ -170,7 +170,7 @@ def start(bot=None, open_browser=True):
 
     def run():
         port = _find_port()
-        print(f"🖥️  Dashboard local: http://127.0.0.1:{port}")
+        print(f"[Dashboard] local: http://127.0.0.1:{port}", flush=True)
         if open_browser:
             try:
                 webbrowser.open(f"http://127.0.0.1:{port}")
@@ -188,7 +188,7 @@ if __name__ == "__main__":
     if BOT.get("started_at") is None:
         BOT["started_at"] = datetime.now().isoformat()
     port = _find_port()
-    print(f"🖥️  Dashboard local (standalone): http://127.0.0.1:{port}")
+    print(f"[Dashboard] standalone: http://127.0.0.1:{port}", flush=True)
     try:
         webbrowser.open(f"http://127.0.0.1:{port}")
     except Exception:
