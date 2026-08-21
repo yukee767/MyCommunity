@@ -15,4 +15,8 @@ export const api = {
   topUsers: () => get("/api/top-users"),
   guilds: () => get("/api/guilds"),
   commandsList: () => get("/api/commands/list"),
+  daily: () => get("/api/stats/daily?days=7"),
+  topGuilds: () => get("/api/stats/top-guilds"),
+  botStatus: () => get("/api/bot/status"),
+  botSync: () => fetch(`${BASE}/api/bot/sync`, { method: "POST" }).then(r => r.json()),
 };

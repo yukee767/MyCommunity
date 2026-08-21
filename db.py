@@ -199,6 +199,25 @@ def top_users(limit: int = 10) -> list:
     return [dict(r) for r in rows]
 
 
+def daily_usage(days: int = 7) -> list:
+    with connect() as conn:
+        rows = conn.execute(
+            "SELECT substr(used_at, 1, 10) as day, COUNT(*) as total FROM command_logs "
+            "WHERE used_at >= datetime('now', ? || ' days') GROUP BY day ORDER BY day",
+            (f"-{days}",),
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def top_guilds(limit: int = 5) -> list:
+    with connect() as conn:
+        rows = conn.execute(
+            "SELECT guild_id, COUNT(*) as total FROM command_logs "
+            "GROUP BY guild_id ORDER BY total DESC LIMIT ?", (limit,)
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
 # ---------------- META ----------------
 def set_meta(key: str, value: str) -> None:
     with connect() as conn:

@@ -106,6 +106,33 @@ def commands_list():
             pass
     return [{"name": n, "description": "", "type": "slash"} for n in ["ban","unban","mute","unmute","lock","lockall","unlock","unlockall","say","embed","kiss","married","divorce","ping","calculator","gpt","translation","giveway","addrole","removerole","addroleall","removeroleall"]]
 
+@app.get("/api/stats/daily")
+def daily(days: int = 7):
+    return db.daily_usage(days)
+
+@app.get("/api/stats/top-guilds")
+def top_guilds():
+    return db.top_guilds()
+
+@app.post("/api/bot/sync")
+async def bot_sync():
+    if bot_ref is not None:
+        try:
+            synced = await bot_ref.tree.sync()
+            return {"ok": True, "synced": len(synced)}
+        except Exception as e:
+            return {"ok": False, "error": str(e)}
+    return {"ok": False, "error": "bot not ready"}
+
+@app.get("/api/bot/status")
+def bot_status():
+    if bot_ref is not None:
+        try:
+            return {"online": not bot_ref.is_closed(), "guilds": len(bot_ref.guilds), "latency": round(bot_ref.latency*1000, 1) if hasattr(bot_ref, 'latency') else 0}
+        except Exception:
+            pass
+    return {"online": db.get_meta("online") == "1", "guilds": int(db.get_meta("guilds") or 0), "latency": 0}
+
 # — para uso integrado com o bot (thread) —
 def start(host: str = "127.0.0.1", port: int = 8000):
     import threading, uvicorn
