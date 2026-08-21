@@ -1,4 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* { scrollbar-width: thin; scrollbar-color: #000 #fff; }
+html { -webkit-font-smoothing: antialiased; }

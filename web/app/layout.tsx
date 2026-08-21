@@ -1,25 +1,16 @@
 import "./globals.css";
-import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import LanguageProvider from "../components/LanguageProvider";
 
-export const metadata = {
-  title: "MyCommunity — Dashboard",
-  description: "Minimal dashboard",
-};
+export const metadata = { title: "MyCommunity", description: "Dashboard" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black antialiased">
+      <body className="bg-[#fcfcf9] text-black antialiased">
         <LanguageProvider>
           <Topbar />
-          <div className="flex min-h-[calc(100vh-48px)]">
-            <Sidebar />
-            <main className="flex-1 bg-white p-8 max-w-[1100px] mx-auto w-full">
-              {children}
-            </main>
-          </div>
+          <main className="max-w-[1160px] mx-auto px-6 py-10">{children}</main>
         </LanguageProvider>
       </body>
     </html>
