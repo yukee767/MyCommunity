@@ -27,6 +27,8 @@ export const translations = {
       usage: "Usage by command", recent: "Recent commands", command: "Command", times: "Times", user: "User", date: "Date", noUsage: "No usage yet", noLogs: "No logs",
       marriagesTitle: "Marriages", marriagesSub: "All marriages saved in local SQLite.", noMarriages: "No marriages yet. Use /married in Discord.", spouse1: "Spouse 1", spouse2: "Spouse 2",
       giveawaysTitle: "Giveaways", giveawaysSub: "Giveaways created with /giveway.", noGiveaways: "No giveaways yet.", prize: "Prize", winners: "Winners", participants: "Participants", ends: "Ends", status: "Status",
+      serversTitle: "Servers", serversSub: "Guilds where MyCommunity is active.", noServers: "No servers yet. Invite via OAuth2.", members: "members",
+      allCommandsTitle: "All Commands", allCommandsSub: "22 slash commands registered.", stackTitle: "Stack", stackDesc: "Frontend: Next.js 15 + React 19 + Tailwind 3.4 (TypeScript) · Backend: FastAPI + Uvicorn + SQLite · Bot: discord.py 2.4",
     },
   },
   pt: {
@@ -52,6 +54,8 @@ export const translations = {
       usage: "Uso por comando", recent: "Comandos recentes", command: "Comando", times: "Vezes", user: "Usuário", date: "Data", noUsage: "Nenhum uso ainda", noLogs: "Sem logs",
       marriagesTitle: "Casamentos", marriagesSub: "Todos os casamentos salvos no SQLite local.", noMarriages: "Nenhum casamento ainda. Use /married no Discord.", spouse1: "Cônjuge 1", spouse2: "Cônjuge 2",
       giveawaysTitle: "Sorteios", giveawaysSub: "Sorteios criados com /giveway.", noGiveaways: "Nenhum sorteio ainda.", prize: "Prêmio", winners: "Ganhadores", participants: "Participantes", ends: "Termina", status: "Status",
+      serversTitle: "Servidores", serversSub: "Servidores onde o MyCommunity está ativo.", noServers: "Nenhum servidor ainda. Convide via OAuth2.", members: "membros",
+      allCommandsTitle: "Todos os Comandos", allCommandsSub: "22 slash commands registrados.", stackTitle: "Stack", stackDesc: "Frontend: Next.js 15 + React 19 + Tailwind 3.4 (TypeScript) · Backend: FastAPI + Uvicorn + SQLite · Bot: discord.py 2.4",
     },
   },
 } as const;

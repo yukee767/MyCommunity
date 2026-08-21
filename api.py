@@ -16,6 +16,7 @@ app.add_middleware(
 )
 
 BOT = {"name": "MyCommunity", "started_at": None}
+bot_ref = None  # preenchido por main.py
 
 def _duration(iso: Optional[str]) -> str:
     if not iso:
@@ -78,6 +79,32 @@ def logs(limit: int = 100):
 @app.get("/api/top-users")
 def top_users(limit: int = 10):
     return db.top_users(limit)
+
+@app.get("/api/guilds")
+def guilds():
+    if bot_ref is not None and hasattr(bot_ref, "guilds"):
+        try:
+            return [{"id": str(g.id), "name": g.name, "member_count": g.member_count or len(g.members) if g.members else 0, "icon": str(g.icon) if g.icon else None} for g in bot_ref.guilds]
+        except Exception:
+            pass
+    import json
+    raw = db.get_meta("guilds_json")
+    if raw:
+        try:
+            return json.loads(raw)
+        except Exception:
+            pass
+    return []
+
+@app.get("/api/commands/list")
+def commands_list():
+    if bot_ref is not None and hasattr(bot_ref, "tree"):
+        try:
+            cmds = bot_ref.tree.get_commands()
+            return [{"name": c.name, "description": c.description or "", "type": "slash"} for c in cmds]
+        except Exception:
+            pass
+    return [{"name": n, "description": "", "type": "slash"} for n in ["ban","unban","mute","unmute","lock","lockall","unlock","unlockall","say","embed","kiss","married","divorce","ping","calculator","gpt","translation","giveway","addrole","removerole","addroleall","removeroleall"]]
 
 # — para uso integrado com o bot (thread) —
 def start(host: str = "127.0.0.1", port: int = 8000):

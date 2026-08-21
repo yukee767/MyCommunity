@@ -13,4 +13,6 @@ export const api = {
   usage: () => get("/api/commands/usage"),
   logs: (limit=100) => get(`/api/commands/logs?limit=${limit}`),
   topUsers: () => get("/api/top-users"),
+  guilds: () => get("/api/guilds"),
+  commandsList: () => get("/api/commands/list"),
 };

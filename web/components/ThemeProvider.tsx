@@ -6,11 +6,13 @@ const Ctx = createContext<{ theme: Theme; toggle: () => void }>({ theme: "light"
 export const useTheme = () => useContext(Ctx);
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  useEffect(() => {
-    const s = localStorage.getItem("mc_theme") as Theme | null;
-    if (s === "dark" || s === "light") setTheme(s);
-  }, []);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof document !== "undefined") {
+      const a = document.documentElement.getAttribute("data-theme") as Theme | null;
+      if (a === "dark" || a === "light") return a;
+    }
+    return "light";
+  });
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("mc_theme", theme);

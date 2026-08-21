@@ -26,12 +26,18 @@ intents = discord.Intents.default()
 intents.message_content = False
 
 bot = commands.Bot(command_prefix="/", intents=intents)
+api.bot_ref = bot
 
 
 @bot.event
 async def on_ready():
     db.set_meta("online", "1")
     db.set_meta("guilds", str(len(bot.guilds)))
+    try:
+        import json
+        db.set_meta("guilds_json", json.dumps([{"id": str(g.id), "name": g.name, "member_count": g.member_count or len(g.members) if g.members else 0} for g in bot.guilds]))
+    except Exception:
+        pass
     iso = datetime.now(timezone.utc).isoformat()
     dashboard.BOT["started_at"] = iso
     api.set_started_now()
