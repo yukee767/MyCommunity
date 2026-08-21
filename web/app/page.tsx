@@ -1,40 +1,43 @@
+"use client";
+import { useEffect, useState } from "react";
 import { Card } from "../components/Card";
 import { api } from "../lib/api";
+import { useLang } from "../lib/i18n";
 
-export const dynamic = "force-dynamic";
+export default function Home() {
+  const { t, lang } = useLang();
+  const [stats, setStats] = useState<any>({ online: false, guilds: 0, uptime: "—", commands_total: 0, marriages: 0, giveaways_active: 0 });
+  useEffect(() => { api.stats().then(setStats).catch(()=>{}); }, []);
 
-export default async function Home() {
-  let stats: any = { online: false, guilds: 0, uptime: "—", commands_total: 0, marriages: 0, giveaways_active: 0 };
-  try { stats = await api.stats(); } catch {}
   return (
     <>
       <div className="mb-7">
-        <h1 className="text-[42px] font-extrabold tracking-tight leading-none">Welcome <span className="text-sky-400">Yu</span>,</h1>
-        <p className="text-[#8a96a8] mt-2.5 text-[16px]">find commonly used dashboard pages below.</p>
+        <h1 className="text-[42px] font-extrabold tracking-tight leading-none">{t.welcome} <span className="text-sky-400">Yu</span>,</h1>
+        <p className="text-[#8a96a8] mt-2.5 text-[16px]">{t.welcomeSub}</p>
       </div>
 
       <div className="flex flex-wrap gap-3 mb-6">
         {[
-          ["Status", stats.online ? "● Online" : "● Offline"],
-          ["Servidores", stats.guilds],
-          ["Uptime", stats.uptime],
-          ["Comandos", stats.commands_total],
-          ["Casamentos", stats.marriages],
-          ["Sorteios", stats.giveaways_active],
+          [t.stats.status, stats.online ? `● ${t.online}` : `● ${t.offline}`],
+          [t.stats.servers, stats.guilds],
+          [t.stats.uptime, stats.uptime],
+          [t.stats.commands, stats.commands_total],
+          [t.stats.marriages, stats.marriages],
+          [t.stats.giveaways, stats.giveaways_active],
         ].map(([k,v])=>(
           <div key={k as string} className="bg-[#1a212b] border border-[#232f3e] px-3.5 py-2.5 rounded-full text-[13px] flex gap-2 items-center">
-            <span className="text-[#8a96a8]">{k}</span><b className={String(v).includes("Online") ? "text-emerald-400" : String(v).includes("Offline") ? "text-red-400" : ""}>{v as any}</b>
+            <span className="text-[#8a96a8]">{k}</span><b className={String(v).includes(t.online) ? "text-emerald-400" : String(v).includes(t.offline) ? "text-red-400" : ""}>{v as any}</b>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[18px]">
-        <Card icon="💬" title="Custom messages" desc="Create fully customized messages called templates and pack them with your very own embeds, buttons and select menus. Use /embed e /say." action="Create template" href="/commands" />
-        <Card icon="🗂" title="Moderation cases" desc={`View and edit all moderation cases using the dashboard. ${stats.commands_total} casos registrados.`} action="View cases" href="/commands" />
-        <Card icon="🏳" title="User reports" desc="Allow users to report others and fully customize how to handle them. Integra com /kiss, /married." action="Configure reports" href="/marriages" />
-        <Card icon="👋" title="Role greetings" desc="Welcome users to their new role by using MyCommunity's role assignment messages. /addrole e /addroleall." action="Show role messages" href="/commands" />
-        <Card icon="✎" title="Prefix & calculator" desc="Quick actions and utilities. /calculator e /ping — tudo logado no SQLite local." action="Open utilities" href="/commands" />
-        <Card icon="⚙" title="AI Moderation" desc="Use artificial intelligence to assist you in moderating your community. /gpt texto + /translation." action="Configure AI" href="/commands" />
+        <Card icon="💬" title={t.cards.custom.title} desc={t.cards.custom.desc} action={t.cards.custom.action} href="/commands" />
+        <Card icon="🗂" title={t.cards.mod.title} desc={`${t.cards.mod.desc} ${stats.commands_total} ${t.cards.mod.suffix}`} action={t.cards.mod.action} href="/commands" />
+        <Card icon="🏳" title={t.cards.reports.title} desc={t.cards.reports.desc} action={t.cards.reports.action} href="/marriages" />
+        <Card icon="👋" title={t.cards.greetings.title} desc={t.cards.greetings.desc} action={t.cards.greetings.action} href="/commands" />
+        <Card icon="✎" title={t.cards.prefix.title} desc={t.cards.prefix.desc} action={t.cards.prefix.action} href="/commands" />
+        <Card icon="⚙" title={t.cards.ai.title} desc={t.cards.ai.desc} action={t.cards.ai.action} href="/commands" />
       </div>
     </>
   );
