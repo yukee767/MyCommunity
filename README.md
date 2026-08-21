@@ -11,11 +11,15 @@ banco de dados **SQLite** local e **dashboard web** rodando no seu PC.
    ```bash
    pip install -r requirements.txt
    ```
-4. Rode o bot (o dashboard sobe sozinho em `http://127.0.0.1:5000`):
+4. Rode o bot + API (`http://127.0.0.1:8000`):
    ```bash
    python main.py
    ```
-   Para rodar sem dashboard: `set NO_DASHBOARD=1` antes.
+   5. Em outro terminal, rode o dashboard Next.js (`http://127.0.0.1:3000`):
+   ```bash
+   cd web && npm install && npm run dev
+   ```
+   Ou use `start.bat` (inicia tudo e abre `http://127.0.0.1:3000`). Para rodar sem API: `set NO_API=1` antes.
 
 > 💾 O banco de dados fica salvo em `data.db` (na mesma pasta) — seus dados de
 > casamentos, sorteios e logs ficam **no seu PC**. Apenas o código é publicado no GitHub.
@@ -84,16 +88,12 @@ O arquivo `data.db` é ignorado pelo git — seus dados nunca são enviados ao G
 
 ## 🖥️ Dashboard local
 
-Painel web que sobe junto com o bot (rodando **no seu PC**):
+Painel **Next.js 15 + Tailwind** (2 cores sólidas, minimalista, EN/PT + modo preto) rodando **no seu PC**:
 
-```
-http://127.0.0.1:5000
-```
+- **Frontend:** `http://127.0.0.1:3000` (`web/`)
+- **API:** `http://127.0.0.1:8000` (`api.py` FastAPI)
 
-Mostra: status online, servidores, tempo online, comandos usados, top usuários,
-casamentos, sorteios e histórico de comandos. Atualiza sozinho a cada 15s.
-(Para abrir em outro dispositivo na mesma rede, rode `python dashboard.py` e
-use o IP da sua máquina — opcional.)
+Mostra: status online, servidores listados, tempo online, 22 comandos listados, casamentos, sorteios e logs. Tema fixo sem flash, sem brilho.
 
 ## 🌐 APIs usadas (100% gratuitas, sem key)
 

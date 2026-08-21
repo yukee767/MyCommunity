@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 
 import db
 import api
-import dashboard
 
 load_dotenv()
 
@@ -39,7 +38,6 @@ async def on_ready():
     except Exception:
         pass
     iso = datetime.now(timezone.utc).isoformat()
-    dashboard.BOT["started_at"] = iso
     api.set_started_now()
     db.set_meta("started_at", iso)
     try:
@@ -89,9 +87,7 @@ async def on_app_error(interaction: discord.Interaction, error: app_commands.App
 
 async def main():
     db.init_db()
-    if os.getenv("NO_DASHBOARD") != "1":
-        dashboard.start(bot)
-    # FastAPI (usado pelo Next.js)
+    # FastAPI (usado pelo Next.js em :3000)
     if os.getenv("NO_API") != "1":
         api.start(host="127.0.0.1", port=8000)
     async with bot:
