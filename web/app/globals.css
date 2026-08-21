@@ -1,4 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html { -webkit-font-smoothing: antialiased; }
+html[data-theme="light"] { --bg: #fcfcf9; --fg: #000; }
+html[data-theme="dark"] { --bg: #0a0a0a; --fg: #fff; }
+body { background: var(--bg); color: var(--fg); }
+* { border-color: var(--fg); }
